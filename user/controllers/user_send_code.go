@@ -5,7 +5,6 @@ import (
 	"dynamic-password/user/models"
 	"dynamic-password/user/result"
 	"dynamic-password/user/utils"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
@@ -38,17 +37,14 @@ func SendEmailCode(c *gin.Context) {
 		result.Error(c, http.StatusBadRequest, "该邮箱已存在，不可重复注册")
 		return
 	}
-
-	// 发送验证码
-	code := utils.SendEmailcodeUtil(body.Email)
+	code := utils.Createcode() // 获取随机数
 
 	// 将验证码保存到redis中
-	client := db.GetRedis()
 	key := body.Email + "_code"
-	err := client.Set(key, code, 5*time.Minute).Err()
-	if err != nil {
-		fmt.Println(err)
-	}
+	go db.RedisSetString(key, utils.GetMd5(code), 5*time.Minute)
+
+	// 发送验证码
+	utils.SendEmailcodeUtil(body.Email, code)
 
 	result.Success(c, "验证码发送成功，5分钟内有效", nil)
 
