@@ -23,9 +23,7 @@ func VerifyEmailFormat(email string) bool {
 func Createcode() string {
 	return fmt.Sprintf("%04v", rand.New(rand.NewSource(time.Now().UnixNano())).Int31n(10000)) //这里面前面的04v是和后面的1000相对应的
 }
-
-func SendEmailcodeUtil(ema string) string {
-	code := Createcode() // 获取随机数
+func SendEmailcodeUtil(ema string, code string) {
 
 	var emails = []string{ema}
 	//e1 := *(*[]byte)(unsafe.Pointer(&code))
@@ -37,7 +35,6 @@ func SendEmailcodeUtil(ema string) string {
 	//e.Text = e1
 	e.Send("smtp.qq.com:587", smtp.PlainAuth("", "2334096040@qq.com", "nnsbeaxzuuboecdf",
 		"smtp.qq.com"))
-	return GetMd5(code)
 }
 
 func GetMd5(password string) string {
