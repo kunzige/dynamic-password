@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/smtp"
 	"regexp"
+	"strings"
 	"time"
 )
 
@@ -43,4 +44,12 @@ func GetMd5(password string) string {
 	h := md5.New()
 	h.Write([]byte(password))
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+// strings compare
+func CompareString(a string, b string) bool {
+	if strings.Compare(a, b) == 0 {
+		return true
+	}
+	return false
 }
