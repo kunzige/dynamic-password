@@ -12,9 +12,9 @@ import (
 var Engine *xorm.Engine
 
 func init() {
-	viper.SetConfigName("env")         // 文件名
-	viper.SetConfigType("toml")        // 文件类型
-	viper.AddConfigPath("user/config") // 路径
+	viper.SetConfigName("env")    // 文件名
+	viper.SetConfigType("toml")   // 文件类型
+	viper.AddConfigPath("config") // 路径
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatal("read config failed: %v", err)
