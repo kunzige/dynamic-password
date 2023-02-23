@@ -10,5 +10,5 @@ func main() {
 	//engine := db.GetDB()
 	r := routes.Init()
 
-	r.Run()
+	r.Run("127.0.0.1:7070")
 }
